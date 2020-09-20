@@ -38,13 +38,24 @@ def submit(*args): #this is the function that takes all the submitted data and s
     # df.to_csv(fileName, mode='a', header=False)
    # print(df)
 
+def checkInfo(): #checks if they've signed in before
+    #
+    #code to check if they've signe din before, and set previous to "true" or "False"
+    previous = True
+    if previous:
+        confirmSignIn()
+    else:
+        getInfo()
+
+
 def confirmSignIn(): #if their ID number is in the DB then it gives them the info to confirm 
     confirm=Toplevel()
-    lbl = Label(confirm, text="from sign in the secon dwindow").pack()
+    lbl = Label(confirm, text="If your ID Number is the following press confirm").pack()
+    lbl = Label(confirm, text=idNumberEntry).pack()
     closebtn = Button(confirm, text="the info is correct", command=confirm.destroy).pack()
 
 
-def getInfo(): #if their ID number is not in the DB then it asks for the info we want
+def getInfo(): #if their ID number is not in the DB then it asks for the info we want   
     getInfo=Toplevel()
     lbl = Label(getInfo, text="from getInfo the secon dwindow").pack()
 
@@ -54,8 +65,29 @@ root = Tk()
 root.title("Fixie Sign In") #this is where the name on top of the window goes
 
 
+mainframe = ttk.Frame(root, padding="3 3 12 12")
+mainframe.grid(column=0, row = 0, sticky =(N, W, E, S))
+root.columnconfigure(0, weight = 1)
+root.rowconfigure(0, weight=1)
 
-btn = Button(root, text="Open Second Window", command=confirmSignIn).pack()
+idNumberEntry = StringVar
+idNumber = IntVar #i'm guessing I may need to do some cleanup of the ID number before submitting it.
+
+
+ttk.Label(mainframe, text="Please swipe your card").grid(column=1, row=1, sticky=W, columnspan=4)
+
+
+
+id_entry = ttk.Entry(mainframe, width=7, textvariable=idNumberEntry)
+id_entry.grid(column=2, row=2, sticky=(W, E))
+
+#https://stackoverflow.com/questions/19148242/tkinter-entry-widget-is-detecting-input-text-possible on ID number
+
+
+
+
+ttk.Button(root, text="Sign In", command=checkInfo).grid(column=2, row=7, sticky=W)
+
 
 
 
