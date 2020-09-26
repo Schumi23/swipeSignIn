@@ -41,23 +41,36 @@ def submit(*args): #this is the function that takes all the submitted data and s
 def checkInfo(): #checks if they've signed in before
     #
     #code to check if they've signe din before, and set previous to "true" or "False"
-    previous = True
-    if previous:
-        confirmSignIn()
+    idNumberFull = id_entry.get()
+    idNumber = int(idNumberFull)
+
+    if (idNumber > 10):
+        confirmSignIn(idNumber)
     else:
-        getInfo()
+        getInfo(idNumber)
 
 
-def confirmSignIn(): #if their ID number is in the DB then it gives them the info to confirm 
+def confirmSignIn(idNumber): #if their ID number is in the DB then it gives them the info to confirm 
     confirm=Toplevel()
     lbl = Label(confirm, text="If your ID Number is the following press confirm").pack()
-    lbl = Label(confirm, text=idNumberEntry).pack()
+    lbl = Label(confirm, text=idNumber).pack()
     closebtn = Button(confirm, text="the info is correct", command=confirm.destroy).pack()
 
 
-def getInfo(): #if their ID number is not in the DB then it asks for the info we want   
+def getInfo(idNumber): #if their ID number is not in the DB then it asks for the info we want   
     getInfo=Toplevel()
-    lbl = Label(getInfo, text="from getInfo the secon dwindow").pack()
+    lbl = Label(getInfo, text="Your ID number is " + str(idNumber)).pack()
+    lbl = Label(getInfo, text="You are not in our records. Please provide the following information: ").pack()
+    name = StringVar()
+    netID = StringVar()
+    affil = StringVar()
+    affil.set("Undergraduate Student")
+    name_entry = ttk.Entry(getInfo, textvariable=name).pack()
+
+
+
+
+    closebtn = Button(getInfo, text="Submit my info", command=getInfo.destroy).pack()
 
 
 
@@ -71,11 +84,10 @@ root.columnconfigure(0, weight = 1)
 root.rowconfigure(0, weight=1)
 
 idNumberEntry = StringVar
-idNumber = IntVar #i'm guessing I may need to do some cleanup of the ID number before submitting it.
+#idNumber = IntVar #i'm guessing I may need to do some cleanup of the ID number before submitting it.
 
 
 ttk.Label(mainframe, text="Please swipe your card").grid(column=1, row=1, sticky=W, columnspan=4)
-
 
 
 id_entry = ttk.Entry(mainframe, width=7, textvariable=idNumberEntry)
@@ -84,14 +96,18 @@ id_entry.grid(column=2, row=2, sticky=(W, E))
 #https://stackoverflow.com/questions/19148242/tkinter-entry-widget-is-detecting-input-text-possible on ID number
 
 
-
-
 ttk.Button(root, text="Sign In", command=checkInfo).grid(column=2, row=7, sticky=W)
 
 
 
 
 mainloop()
+
+
+
+
+
+
 
 
 # root = Tk()
