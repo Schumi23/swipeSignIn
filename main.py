@@ -63,9 +63,23 @@ def getInfo(idNumber): #if their ID number is not in the DB then it asks for the
     lbl = Label(getInfo, text="You are not in our records. Please provide the following information: ").pack()
     name = StringVar()
     netID = StringVar()
+
     affil = StringVar()
-    affil.set("Undergraduate Student")
+    choices = { 'Emory College','Other undergraduate','Laney grad student','RSPH grad student','SOM grad student', 'SON grad student', 'other grad student', 'faculty', 'staff', 'other'}
+    affil.set('Emory College')
+    affilMenu = OptionMenu(getInfo, affil, *choices)
+
+    lbl = Label(getInfo, text="What is your affiliation with Emory?").pack()
+
+    affilMenu.pack()
+
+
+
+    lbl = Label(getInfo, text="What is your name?").pack()
     name_entry = ttk.Entry(getInfo, textvariable=name).pack()
+
+    lbl = Label(getInfo, text="What is your netID? (for example to log in to CampusLabs/OrgSync)").pack()
+    netID_entry = ttk.Entry(getInfo, textvariable=netID).pack()
 
 
 
